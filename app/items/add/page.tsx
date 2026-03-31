@@ -48,7 +48,7 @@ import { itemFormSchema, type ItemFormValues } from '@/lib/validations/item';
 import type { Receipt } from '@/lib/types';
 
 // Placeholder images for different categories
-const placeholderImages = {
+const placeholderImages: Record<string, string[]> = {
   Electronics: [
     '/placeholder.svg?height=400&width=600&text=Electronics+1',
     '/placeholder.svg?height=400&width=600&text=Electronics+2',
@@ -130,8 +130,9 @@ export default function AddItemPage() {
       const reader = new FileReader();
 
       reader.onload = (event) => {
-        if (event.target && typeof event.target.result === 'string') {
-          setImages((prev) => [...prev, event.target.result]);
+        const result = event.target?.result;
+        if (typeof result === 'string') {
+          setImages((prev) => [...prev, result]);
         }
       };
 

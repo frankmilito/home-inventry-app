@@ -1,10 +1,11 @@
 import { v4 as uuidv4 } from "uuid"
 
-const items = []
+type StoredItem = Record<string, unknown> & { id: string }
 
-export const addItem = (item) => {
+const items: StoredItem[] = []
+
+export const addItem = (item: Record<string, unknown>) => {
   const id = uuidv4()
   items.push({ ...item, id })
   return id
 }
-

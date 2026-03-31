@@ -38,7 +38,7 @@ import { useInventory } from '@/lib/inventory-context';
 import { useToast } from '@/hooks/use-toast';
 
 // Placeholder images for different categories
-const placeholderImages = {
+const placeholderImages: Record<string, string[]> = {
   Electronics: [
     '/placeholder.svg?height=400&width=600&text=Electronics+1',
     '/placeholder.svg?height=400&width=600&text=Electronics+2',
@@ -96,8 +96,8 @@ export default function EditItemPage({
     category: '',
     description: '',
     purchaseDate: '',
-    purchasePrice: 0,
-    currentValue: 0,
+    purchasePrice: '',
+    currentValue: '',
     location: '',
     serialNumber: '',
     model: '',
@@ -122,8 +122,8 @@ export default function EditItemPage({
         category: item.category || '',
         description: item.description || '',
         purchaseDate: item.purchaseDate || '',
-        purchasePrice: item.purchasePrice || 0,
-        currentValue: item.currentValue || 0,
+        purchasePrice: item.purchasePrice != null ? String(item.purchasePrice) : '',
+        currentValue: item.currentValue != null ? String(item.currentValue) : '',
         location: item.location || '',
         serialNumber: item.serialNumber || '',
         model: item.model || '',
@@ -174,8 +174,9 @@ export default function EditItemPage({
       const reader = new FileReader();
 
       reader.onload = (event) => {
-        if (event.target && typeof event.target.result === 'string') {
-          setImages((prev) => [...prev, event.target.result]);
+        const result = event.target?.result;
+        if (typeof result === 'string') {
+          setImages((prev) => [...prev, result]);
         }
       };
 
